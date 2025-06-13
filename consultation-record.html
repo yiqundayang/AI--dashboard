@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>咨询记录 - AI咨询师驾驶舱</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/consultation-record.css">
+</head>
+<body>
+  <div class="page-container">
+    <!-- 页面头部 -->
+    <header class="page-header">
+      <h1 class="page-title">咨询记录</h1>
+      <div class="header-actions">
+        <button class="btn btn-primary" id="exportBtn">📄 导出记录</button>
+        <button class="btn btn-link back-btn" onclick="history.back()">← 返回</button>
+      </div>
+    </header>
+    
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+      <!-- 主导航Tab -->
+      <div class="main-tabs">
+        <button class="main-tab active" data-main-tab="notes">📝 咨询笔记</button>
+        <button class="main-tab" data-main-tab="ai-record">🤖 智能记录</button>
+      </div>
+      
+      <!-- 咨询笔记Tab内容 -->
+      <div class="main-tab-content active" data-main-panel="notes">
+        <div class="notes-container">
+          <div class="notes-header">
+            <h3>咨询笔记内容</h3>
+            <div class="notes-info">
+              <span class="info-item">咨询时间: <span id="consultationTime">2024年1月18日 14:00-15:00</span></span>
+              <span class="info-item">来访者: <span id="clientName">李小雅</span></span>
+              <span class="info-item">咨询师: <span>张咨询师</span></span>
+            </div>
+          </div>
+          
+          <!-- 这里将显示咨询笔记的完整页面截图或内容 -->
+          <div class="notes-content" id="notesContent">
+            <div class="notes-placeholder">
+              <div class="placeholder-icon">📋</div>
+              <p>正在加载咨询笔记内容...</p>
+              <small>包含手写笔记、画板内容和逐字稿标记</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 智能记录Tab内容 -->
+      <div class="main-tab-content" data-main-panel="ai-record">
+        <div class="record-layout">
+          <!-- 左侧：咨询记录列表 -->
+          <aside class="record-sidebar">
+            <div class="sidebar-header">
+              <h2>智能分析</h2>
+            </div>
+            <div class="record-list" id="recordList">
+              <!-- 记录列表将在这里动态生成 -->
+            </div>
+          </aside>
+          
+          <!-- 右侧：记录详情 -->
+          <section class="record-main">
+            <div class="record-tabs">
+              <button class="tab-btn active" data-tab="dialogue">对话总结</button>
+              <button class="tab-btn" data-tab="topics">话题总结</button>
+              <button class="tab-btn" data-tab="characters">对话中的人与物</button>
+              <button class="tab-btn" data-tab="process">咨询过程总结</button>
+              <button class="tab-btn" data-tab="suggestions">后续咨询建议</button>
+            </div>
+            
+            <div class="tab-content">
+              <!-- 对话总结 -->
+              <div class="tab-panel active" data-panel="dialogue">
+                <div class="content-section">
+                  <h3 class="section-title">📋 对话总结</h3>
+                  <div class="summary-grid">
+                    <div class="summary-item">
+                      <h4>核心议题</h4>
+                      <p>父母对孩子学业与下线了消极的焦虑，双方在教育方式上存在分歧。父亲倾向于严格管教希望提高量改变现状，母亲期望更宽松的环境。</p>
+                    </div>
+                    
+                    <div class="summary-item">
+                      <h4>主要困扰与需求</h4>
+                      <p>父亲的主要困扰是关儿成绩下滑，沾染手机，担心影响未来：他归恋童身体方式产生质疑，既希望变得严而又对现有方法的效果迟疑可否仍后来问题由用手机信念，但对如何有好手段和共其知识，一些需要建议一个有效教育决策，并要和其他家庭成员关系，母亲则认为应继与内让问题不大，主张自然时期。</p>
+                    </div>
+                    
+                    <div class="summary-item">
+                      <h4>下次咨询计划建议</h4>
+                      <div class="suggestion-list">
+                        <p>1. 探讨父亲自身与长辈对于教育理念的影响，帮助其跨越星空"暴君式"教育常带来的负面体验。</p>
+                        <p>2. 明确新期子的学习状态和内在动机，了解是否在学习过程、情感倾向或人际关系问题。</p>
+                        <p>3. 辅助父母指示也此教育的均衡方法，让姥手段并行到第对拔，减少冲突发生机械。</p>
+                        <p>4. (由AI咨询师）引导父母共同探讨有效的沟通方式，改善家庭互动模式，减少对孩子的提支撑。</p>
+                        <p>5. (由AI咨询师）引入学习动机激发策略，结合家庭陪伴与鼓励机制，协助孩子逐步建立学习信心与其调。</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="content-section">
+                  <h3 class="section-title">💭 话题总结</h3>
+                  <div class="topic-list">
+                    <div class="topic-item">
+                      <h4>家庭教育方式的冲突</h4>
+                      <p>父母在教育理念上存在分歧，父亲强调纪律与控制，认为应该限制孩子的不当行为，母亲则倾向于宽松管理，认为孩子还小不必太大学。双方缺乏统一有效的沟通，导致家庭环境紧张重，影响对孩子的教育效果。</p>
+                    </div>
+                    
+                    <div class="topic-item">
+                      <h4>孩子学习问题引发的焦虑</h4>
+                      <p>家长对孩子的二成绩下滑感到焦虑，尤其是父亲认为这将影响孩子之间的经历：母亲则认为应该关注孩子的整体发展，不仅仅是学习成绩。双方都关心孩子的未来，但表达担忧和应对策略有分歧，母亲相信孩子要成长调整过程中需要更多理解与者重。</p>
+                    </div>
+                    
+                    <div class="topic-item">
+                      <h4>关于手机与电视使用的担忧</h4>
+                      <p>父亲担忧孩子沉迷手机和电视，认为这历响學習效果，并表达了对孩子乞求无节制的担忧。母亲则认为偶尔使用电子设备并非大不了的事，无需过度限制。双方涉技如何平衡孩子的娱乐需求与学习动机无效元的解诀策略。</p>
+                    </div>
+                    
+                    <div class="topic-item">
+                      <h4>咨询过程中关系张力的显现</h4>
+                      <p>对话过程中观察到家庭内部的系统张力，包括父母与孩子之间的情感距离和权力关系的低平衡。父亲希望透过严格管重与掌控，母亲则认为防应换种恩慈包容的方式，双方者缺乏有效的协商机制，这种对立也影响孩子的改变与转。</p>
+                    </div>
+                    
+                    <div class="topic-item">
+                      <h4>父亲的成长经历与育儿动机</h4>
+                      <p>父亲提到自己的学习习惯于天然学习作风影响的程度，并余达了对孩子就希意志的成都，他希望能用更适当方式对待孩子，但感到恰当的办法末完全掌握。母亲在改过程中角戏子的孩子教育传统与事务重任的调制，但都希望能找到更加平衡的育儿途径。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 话题总结 -->
+              <div class="tab-panel" data-panel="topics">
+                <div class="content-section">
+                  <h3 class="section-title">💭 话题分析</h3>
+                  <div class="topic-analysis">
+                    <div class="topic-card">
+                      <div class="topic-header">
+                        <h4>🎯 主要话题</h4>
+                        <span class="topic-count">5个</span>
+                      </div>
+                      <ul class="topic-tags">
+                        <li class="tag high">教育理念分歧</li>
+                        <li class="tag medium">学习成绩焦虑</li>
+                        <li class="tag medium">电子设备使用</li>
+                        <li class="tag low">亲子沟通</li>
+                        <li class="tag low">家庭氛围</li>
+                      </ul>
+                    </div>
+                    
+                    <div class="topic-card">
+                      <div class="topic-header">
+                        <h4>🔥 热点议题</h4>
+                        <span class="topic-intensity">高强度</span>
+                      </div>
+                      <p>父母在孩子的手机和学习管理上存在严重分歧，成为本次咨询的核心冲突点。</p>
+                    </div>
+                    
+                    <div class="topic-card">
+                      <div class="topic-header">
+                        <h4>💡 深层需求</h4>
+                      </div>
+                      <p>双方都希望孩子健康成长，但表达关爱的方式不同，需要找到平衡点和共同目标。</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 对话中的人与物 -->
+              <div class="tab-panel" data-panel="characters">
+                <div class="content-section">
+                  <h3 class="section-title">👥 人物角色</h3>
+                  <div class="character-grid">
+                    <div class="character-card">
+                      <div class="character-avatar">👨</div>
+                      <h4>父亲</h4>
+                      <div class="character-traits">
+                        <span class="trait">严格型</span>
+                        <span class="trait">焦虑型</span>
+                      </div>
+                      <p>对孩子学习要求严格，担心放松管理会影响未来发展。表现出对现状的不满和对改变的迫切需求。</p>
+                    </div>
+                    
+                    <div class="character-card">
+                      <div class="character-avatar">👩</div>
+                      <h4>母亲</h4>
+                      <div class="character-traits">
+                        <span class="trait">宽松型</span>
+                        <span class="trait">包容型</span>
+                      </div>
+                      <p>倾向于给孩子更多自由空间，认为适度的娱乐和放松对孩子发展有益。主张耐心等待孩子成长。</p>
+                    </div>
+                    
+                    <div class="character-card">
+                      <div class="character-avatar">🧒</div>
+                      <h4>孩子 (李小雅)</h4>
+                      <div class="character-traits">
+                        <span class="trait">青春期</span>
+                        <span class="trait">求关注</span>
+                      </div>
+                      <p>正处于青春期，学习成绩有所下滑，对电子设备感兴趣。在父母不同教育方式中寻找平衡。</p>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="content-section">
+                  <h3 class="section-title">📱 关键物品</h3>
+                  <div class="object-list">
+                    <div class="object-item">
+                      <span class="object-icon">📱</span>
+                      <div class="object-info">
+                        <h5>手机</h5>
+                        <p>成为家庭冲突的焦点，父亲认为影响学习，母亲认为适度使用无妨</p>
+                      </div>
+                    </div>
+                    
+                    <div class="object-item">
+                      <span class="object-icon">📺</span>
+                      <div class="object-info">
+                        <h5>电视</h5>
+                        <p>另一个争议焦点，代表了娱乐与学习时间分配的矛盾</p>
+                      </div>
+                    </div>
+                    
+                    <div class="object-item">
+                      <span class="object-icon">📚</span>
+                      <div class="object-info">
+                        <h5>学习资料</h5>
+                        <p>父亲希望孩子更多投入，母亲认为不应过度施压</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 咨询过程总结 -->
+              <div class="tab-panel" data-panel="process">
+                <div class="content-section">
+                  <h3 class="section-title">📈 咨询过程分析</h3>
+                  <div class="process-timeline">
+                    <div class="timeline-item">
+                      <div class="timeline-marker">1</div>
+                      <div class="timeline-content">
+                        <h4>开场与问题澄清 (0-10分钟)</h4>
+                        <p>了解家庭基本情况，明确咨询目标。父母表达了对孩子学习状态的不同观点。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                      <div class="timeline-marker">2</div>
+                      <div class="timeline-content">
+                        <h4>深度探索 (10-25分钟)</h4>
+                        <p>挖掘教育理念分歧的根源，探讨各自的担忧和期望。发现沟通模式的问题。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                      <div class="timeline-marker">3</div>
+                      <div class="timeline-content">
+                        <h4>情感疏导 (25-35分钟)</h4>
+                        <p>帮助父母理解对方的立场，缓解紧张情绪，建立共情基础。</p>
+                      </div>
+                    </div>
+                    
+                    <div class="timeline-item">
+                      <div class="timeline-marker">4</div>
+                      <div class="timeline-content">
+                        <h4>方案讨论 (35-45分钟)</h4>
+                        <p>共同探讨可行的解决方案，制定初步的家庭教育计划。</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="content-section">
+                  <h3 class="section-title">🎯 咨询效果评估</h3>
+                  <div class="effect-grid">
+                    <div class="effect-item">
+                      <h4>情绪变化</h4>
+                      <div class="progress-bar">
+                        <div class="progress" style="width: 75%"></div>
+                      </div>
+                      <span>75% 改善</span>
+                    </div>
+                    
+                    <div class="effect-item">
+                      <h4>理解增进</h4>
+                      <div class="progress-bar">
+                        <div class="progress" style="width: 80%"></div>
+                      </div>
+                      <span>80% 改善</span>
+                    </div>
+                    
+                    <div class="effect-item">
+                      <h4>合作意愿</h4>
+                      <div class="progress-bar">
+                        <div class="progress" style="width: 70%"></div>
+                      </div>
+                      <span>70% 改善</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 后续咨询建议 -->
+              <div class="tab-panel" data-panel="suggestions">
+                <div class="content-section">
+                  <h3 class="section-title">🔮 后续咨询建议</h3>
+                  <div class="suggestion-cards">
+                    <div class="suggestion-card priority-high">
+                      <div class="card-header">
+                        <h4>🚨 优先级：高</h4>
+                        <span class="timeline">下次咨询</span>
+                      </div>
+                      <h5>建立统一的教育理念</h5>
+                      <p>帮助父母找到教育方式的平衡点，制定双方都能接受的家庭规则和管理策略。</p>
+                      <div class="suggestion-methods">
+                        <span class="method">家庭会议</span>
+                        <span class="method">角色扮演</span>
+                        <span class="method">目标设定</span>
+                      </div>
+                    </div>
+                    
+                    <div class="suggestion-card priority-medium">
+                      <div class="card-header">
+                        <h4>⚠️ 优先级：中</h4>
+                        <span class="timeline">2-3次内</span>
+                      </div>
+                      <h5>改善亲子沟通模式</h5>
+                      <p>教授有效的沟通技巧，帮助家庭成员更好地表达需求和情感，减少冲突发生。</p>
+                      <div class="suggestion-methods">
+                        <span class="method">沟通训练</span>
+                        <span class="method">倾听技巧</span>
+                        <span class="method">情感表达</span>
+                      </div>
+                    </div>
+                    
+                    <div class="suggestion-card priority-low">
+                      <div class="card-header">
+                        <h4>💡 优先级：低</h4>
+                        <span class="timeline">长期跟进</span>
+                      </div>
+                      <h5>孩子个体辅导</h5>
+                      <p>根据孩子的具体情况，提供个性化的学习动机激发和情绪管理支持。</p>
+                      <div class="suggestion-methods">
+                        <span class="method">个体咨询</span>
+                        <span class="method">学习指导</span>
+                        <span class="method">兴趣培养</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="content-section">
+                  <h3 class="section-title">📅 咨询计划</h3>
+                  <div class="plan-table">
+                    <div class="plan-row plan-header">
+                      <div class="plan-cell">咨询次数</div>
+                      <div class="plan-cell">主要目标</div>
+                      <div class="plan-cell">预期时间</div>
+                      <div class="plan-cell">成功指标</div>
+                    </div>
+                    
+                    <div class="plan-row">
+                      <div class="plan-cell">第4次</div>
+                      <div class="plan-cell">教育理念统一</div>
+                      <div class="plan-cell">1周后</div>
+                      <div class="plan-cell">制定家庭规则</div>
+                    </div>
+                    
+                    <div class="plan-row">
+                      <div class="plan-cell">第5次</div>
+                      <div class="plan-cell">沟通技巧训练</div>
+                      <div class="plan-cell">2周后</div>
+                      <div class="plan-cell">冲突减少50%</div>
+                    </div>
+                    
+                    <div class="plan-row">
+                      <div class="plan-cell">第6次</div>
+                      <div class="plan-cell">效果评估调整</div>
+                      <div class="plan-cell">1个月后</div>
+                      <div class="plan-cell">家庭和谐度提升</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/consultation-record.js"></script>
+</body>
+</html> 

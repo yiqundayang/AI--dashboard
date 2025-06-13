@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>视频咨询 - AI咨询师驾驶舱</title>
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/video-consultation.css">
+</head>
+<body>
+  <!-- 页面头部 -->
+  <header class="consultation-header">
+    <div class="header-left">
+      <button class="back-btn" onclick="history.back()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="m15 18-6-6 6-6"/>
+        </svg>
+        <span>返回</span>
+      </button>
+      <div class="consultation-info">
+        <h1>视频咨询</h1>
+        <div class="client-details">
+          <span class="client-name" id="clientName">来访者</span>
+          <span class="separator">•</span>
+          <span class="consultation-time" id="consultationTime">今日咨询</span>
+        </div>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="consultation-status">
+        <div class="status-indicator"></div>
+        <span>咨询中</span>
+      </div>
+      <div class="timer-display">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <polyline points="12,6 12,12 16,14"/>
+        </svg>
+        <span class="session-timer" id="sessionTimer">00:00:00</span>
+      </div>
+      <button class="end-btn" id="endConsultationBtn">结束咨询</button>
+    </div>
+  </header>
+
+  <!-- 主要内容区域 -->
+  <main class="consultation-container">
+    <!-- 视频区域 -->
+    <section class="video-section">
+      <div class="main-video-container">
+        <div class="video-frame main-video">
+          <div class="video-content">
+            <div class="video-avatar">
+              <div class="avatar-circle">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <span class="participant-name">刘豊信(咨询师)</span>
+            </div>
+            <div class="video-controls">
+              <button class="control-btn" id="muteBtn" title="静音">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                </svg>
+              </button>
+              <button class="control-btn" id="cameraBtn" title="摄像头">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M23 7l-7 5 7 5V7z"/>
+                  <rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="participant-videos" id="participantVideos">
+        <div class="video-frame participant-video">
+          <div class="video-content">
+            <div class="video-avatar">
+              <div class="avatar-circle participant">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                  <circle cx="12" cy="7" r="4"/>
+                </svg>
+              </div>
+              <span class="participant-name">刘力霞</span>
+            </div>
+          </div>
+        </div>
+        <div class="video-frame participant-video">
+          <div class="video-content">
+            <div class="video-avatar">
+              <div class="avatar-circle participant">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                  <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+              </div>
+              <span class="participant-name">家庭成员</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 信息面板 -->
+    <section class="info-panel">
+      <div class="panel-header">
+        <div class="tab-navigation">
+          <button class="tab-btn active" data-tab="transcript">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14,2 14,8 20,8"/>
+              <line x1="16" y1="13" x2="8" y2="13"/>
+              <line x1="16" y1="17" x2="8" y2="17"/>
+              <line x1="10" y1="9" x2="8" y2="9"/>
+            </svg>
+            <span>实时逐字稿</span>
+          </button>
+          <button class="tab-btn" data-tab="ai-tips">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 18 18.031V19a2 2 0 1 1-4 0v-.969c0-.799-.313-1.566-.879-2.131l-.548-.547z"/>
+            </svg>
+            <span>AI实时提示</span>
+          </button>
+          <button class="tab-btn" data-tab="history">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M3 3v5h5"/>
+              <path d="M3.05 13A9 9 0 1 0 6 5.3L3 8"/>
+              <path d="M12 7v5l4 2"/>
+            </svg>
+            <span>咨询记录</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel-content">
+        <!-- 实时逐字稿 -->
+        <div class="tab-content active" id="transcriptTab">
+          <div class="transcript-container">
+            <div class="transcript-header">
+              <h3>实时转录</h3>
+              <span class="status-badge recording">正在录制</span>
+            </div>
+            <div class="transcript-messages" id="transcriptMessages">
+              <!-- 消息将通过JavaScript动态添加 -->
+            </div>
+          </div>
+        </div>
+
+        <!-- AI实时提示 -->
+        <div class="tab-content" id="aiTipsTab">
+          <div class="ai-tips-container">
+            <div class="ai-tips-header">
+              <h3>AI智能分析</h3>
+              <span class="status-badge analyzing">分析中</span>
+            </div>
+            <div class="ai-tips-content" id="aiTipsContent">
+              <div class="tip-item">
+                <div class="tip-icon warning">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                    <line x1="12" y1="9" x2="12" y2="13"/>
+                    <line x1="12" y1="17" x2="12.01" y2="17"/>
+                  </svg>
+                </div>
+                <div class="tip-content">
+                  <div class="tip-title">互动困难</div>
+                  <div class="tip-text">咨询师延续咨询对象个人看法,未促进双方讨论共同互动</div>
+                </div>
+                <button class="tip-action">忽略</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 咨询记录 -->
+        <div class="tab-content" id="historyTab">
+          <div class="history-container">
+            <div class="history-header">
+              <h3>历史记录</h3>
+              <button class="view-all-btn">查看全部</button>
+            </div>
+            <div class="history-list" id="historyList">
+              <div class="history-item">
+                <div class="history-meta">
+                  <span class="session-number">第 16 次</span>
+                  <span class="session-date">2025-05-25</span>
+                </div>
+                <div class="history-title">项目推进沟通</div>
+                <div class="history-time">15:20-15:40</div>
+                <div class="history-type video">视频咨询</div>
+              </div>
+              <div class="history-item">
+                <div class="history-meta">
+                  <span class="session-number">第 15 次</span>
+                  <span class="session-date">2025-05-25</span>
+                </div>
+                <div class="history-title">工作流程优化沟通</div>
+                <div class="history-time">15:00-15:20</div>
+                <div class="history-type offline">到店咨询</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 核销弹窗 -->
+  <div class="modal" id="checkoutModal" style="display: none;">
+    <div class="modal-content checkout-modal">
+      <div class="modal-header">
+        <h3>结束咨询</h3>
+        <button class="modal-close" id="checkoutModalClose">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="checkout-info">
+          <div class="info-row">
+            <label>来访者:</label>
+            <span id="checkoutClientName">李小雅</span>
+          </div>
+          <div class="info-row">
+            <label>开始时间:</label>
+            <span id="checkoutStartTime">2024年1月18日 14:00</span>
+          </div>
+          <div class="info-row">
+            <label>实际时长:</label>
+            <span id="checkoutActualDuration">00:45:32</span>
+          </div>
+        </div>
+        
+        <div class="checkout-duration">
+          <label>核销时长:</label>
+          <div class="duration-options">
+            <button class="duration-btn" data-minutes="30">30分钟</button>
+            <button class="duration-btn active" data-minutes="60">60分钟</button>
+            <button class="duration-btn" data-minutes="90">90分钟</button>
+            <button class="duration-btn" data-minutes="120">120分钟</button>
+          </div>
+          <div class="custom-duration">
+            <label>自定义:</label>
+            <input type="number" id="customMinutes" placeholder="分钟" min="1">
+          </div>
+        </div>
+        
+        <div class="checkout-notes">
+          <label>备注:</label>
+          <textarea id="checkoutRemark" placeholder="请输入本次咨询的备注信息..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" id="cancelCheckout">取消</button>
+        <button class="btn btn-primary" id="confirmCheckout">确认核销</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/video-consultation.js"></script>
+</body>
+</html> 

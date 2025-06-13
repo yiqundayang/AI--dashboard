@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>待办中心 - AI咨询师驾驶舱</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/todo.css">
+</head>
+<body>
+  <div class="page-container">
+    <!-- 页面头部 -->
+    <header class="page-header">
+      <h1 class="page-title">待办中心</h1>
+    </header>
+    
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+      <!-- 日期选择器 -->
+      <div class="date-selector" id="dateSelector">
+        <button class="date-tab active" data-date="today">今天</button>
+        <button class="date-tab" data-date="tomorrow">明天</button>
+        <!-- 动态生成的日期标签会在这里插入 -->
+      </div>
+      
+      <!-- 咨询区域 -->
+      <section class="consultation-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            咨询 
+            <span class="count-badge" id="consultationCount">3</span>
+          </h2>
+          <button class="btn-link" id="viewAllBtn">查看全部 ></button>
+        </div>
+        
+        <div class="consultation-list" id="consultationList">
+          <!-- 到店咨询 -->
+          <div class="consultation-item" data-type="offline" data-id="1">
+            <div class="consultation-type">
+              <div class="type-tag offline">到店咨询</div>
+            </div>
+            <div class="user-avatar-section">
+              <img src="https://picsum.photos/seed/user1/100/100" alt="用户头像" class="avatar">
+            </div>
+            <div class="user-info">
+              <div class="user-details">
+                <div class="user-name">
+                  <span class="name">张小明</span>
+                  <span class="tag-account">主账号</span>
+                </div>
+                <div class="consultation-time">17:00-18:00</div>
+                <a href="customer-profile.html?user=user1&name=张小明" class="profile-link">查看客户档案</a>
+              </div>
+            </div>
+            <div class="consultation-actions">
+              <button class="btn btn-primary start-record" data-id="1">开始记录</button>
+              <button class="btn btn-danger verify-consultation" data-id="1">核销</button>
+            </div>
+          </div>
+          
+          <!-- 视频咨询 1 -->
+          <div class="consultation-item" data-type="video" data-id="2">
+            <div class="consultation-type">
+              <div class="type-tag video">视频咨询</div>
+            </div>
+            <div class="user-avatar-section">
+              <img src="https://picsum.photos/seed/user2/100/100" alt="用户头像" class="avatar">
+            </div>
+            <div class="user-info">
+              <div class="user-details">
+                <div class="user-name">
+                  <span class="name">李小雅</span>
+                  <span class="tag-account">主账号</span>
+                </div>
+                <div class="consultation-time">18:30-19:30</div>
+                <a href="customer-profile.html?user=user2&name=李小雅" class="profile-link">查看客户档案</a>
+              </div>
+            </div>
+            <div class="consultation-actions">
+              <button class="btn btn-primary start-consultation" data-id="2">开始咨询</button>
+              <button class="btn btn-secondary share-room" data-id="2">分享房间</button>
+            </div>
+          </div>
+          
+          <!-- 视频咨询 2 -->
+          <div class="consultation-item" data-type="video" data-id="3">
+            <div class="consultation-type">
+              <div class="type-tag video">视频咨询</div>
+            </div>
+            <div class="user-avatar-section">
+              <img src="https://picsum.photos/seed/user3/100/100" alt="用户头像" class="avatar">
+            </div>
+            <div class="user-info">
+              <div class="user-details">
+                <div class="user-name">
+                  <span class="name">王小芳</span>
+                  <span class="tag-account">主账号</span>
+                </div>
+                <div class="consultation-time">20:00-21:00</div>
+                <a href="customer-profile.html?user=user3&name=王小芳" class="profile-link">查看客户档案</a>
+              </div>
+            </div>
+            <div class="consultation-actions">
+              <button class="btn btn-primary start-consultation" data-id="3">开始咨询</button>
+              <button class="btn btn-secondary share-room" data-id="3">分享房间</button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- 咨询记录区域 -->
+      <section class="records-section">
+        <div class="section-header">
+          <h2 class="section-title">
+            咨询记录
+            <span class="count-badge" id="recordsCount">3</span>
+          </h2>
+        </div>
+        
+        <div class="records-list" id="recordsList">
+          <!-- 到店咨询记录 -->
+          <div class="record-item" data-type="offline" data-id="4">
+            <div class="consultation-type">
+              <div class="type-tag offline">到店咨询</div>
+            </div>
+            <div class="user-avatar-section">
+              <img src="https://picsum.photos/seed/user4/100/100" alt="用户头像" class="avatar">
+            </div>
+            <div class="user-info">
+              <div class="user-details">
+                <div class="user-name">
+                  <span class="name">陈小强</span>
+                  <span class="tag-account">主账号</span>
+                </div>
+                <div class="consultation-time">14:00-15:00</div>
+                <a href="customer-profile.html?user=user4&name=陈小强" class="profile-link">查看客户档案</a>
+              </div>
+            </div>
+            <div class="record-status">
+              <button class="btn btn-secondary btn-sm record-generating" data-id="4">
+                <span class="status-icon generating">⏳</span>
+                咨询记录生成中
+              </button>
+            </div>
+          </div>
+          
+          <!-- 视频咨询记录 1 -->
+          <div class="record-item" data-type="video" data-id="5">
+            <div class="consultation-type">
+              <div class="type-tag video">视频咨询</div>
+            </div>
+            <div class="user-avatar-section">
+              <img src="https://picsum.photos/seed/user5/100/100" alt="用户头像" class="avatar">
+            </div>
+            <div class="user-info">
+              <div class="user-details">
+                <div class="user-name">
+                  <span class="name">刘小娟</span>
+                  <span class="tag-account">主账号</span>
+                </div>
+                <div class="consultation-time">11:30-12:00</div>
+                <a href="customer-profile.html?user=user5&name=刘小娟" class="profile-link">查看客户档案</a>
+              </div>
+            </div>
+            <div class="record-status">
+              <button class="btn btn-warning btn-sm record-pending" data-id="5">
+                <span class="status-icon pending">📋</span>
+                咨询记录待确认
+              </button>
+            </div>
+          </div>
+          
+          <!-- 视频咨询记录 2 -->
+          <div class="record-item" data-type="video" data-id="6">
+            <div class="consultation-type">
+              <div class="type-tag video">视频咨询</div>
+            </div>
+            <div class="user-avatar-section">
+              <img src="https://picsum.photos/seed/user6/100/100" alt="用户头像" class="avatar">
+            </div>
+            <div class="user-info">
+              <div class="user-details">
+                <div class="user-name">
+                  <span class="name">周小琳</span>
+                  <span class="tag-account">主账号</span>
+                </div>
+                <div class="consultation-time">09:00-10:00</div>
+                <a href="customer-profile.html?user=user6&name=周小琳" class="profile-link">查看客户档案</a>
+              </div>
+            </div>
+            <div class="record-status">
+              <button class="btn btn-primary btn-sm view-record" data-id="6">查看咨询记录</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  
+  <!-- 确认核销弹窗 -->
+  <div class="modal" id="confirmModal">
+    <div class="modal-content">
+      <h3 class="modal-title">确认核销</h3>
+      <p class="modal-message">确认核销本次到店咨询？核销后不可撤销。</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="cancelBtn">取消</button>
+        <button class="btn btn-danger" id="confirmBtn">确认</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 分享房间弹窗 -->
+  <div class="modal" id="shareModal">
+    <div class="modal-content">
+      <h3 class="modal-title">分享咨询房间</h3>
+      <p class="modal-message">请选择分享方式：</p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="shareCancel">取消</button>
+        <button class="btn btn-primary" id="shareConfirm">分享链接</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toast提示 -->
+  <div class="toast" id="toast" style="display: none;">
+    <span class="toast-message" id="toastMessage"></span>
+  </div>
+  
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/todo.js"></script>
+</body>
+</html> 

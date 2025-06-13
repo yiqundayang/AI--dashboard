@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>客户档案 - AI咨询师驾驶舱</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/profile.css">
+</head>
+<body>
+  <div class="page-container">
+    <!-- 页面头部 -->
+    <header class="page-header">
+      <h1 class="page-title">客户档案</h1>
+      <button class="btn btn-link back-btn" onclick="history.back()">← 返回</button>
+    </header>
+    
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+      <div class="profile-layout" id="profileLayout">
+        <!-- 左侧客户列表 -->
+        <aside class="customer-sidebar" id="customerSidebar">
+          <div class="sidebar-header">
+            <button class="sidebar-toggle" id="sidebarToggle">
+              <span class="toggle-icon">‹</span>
+            </button>
+          </div>
+          <div class="customer-search">
+            <input 
+              type="text" 
+              class="search-input" 
+              placeholder="搜索客户..."
+              id="customerSearch"
+            >
+          </div>
+          <div class="customer-list scrollable" id="customerList">
+            <!-- 客户列表项将动态生成 -->
+          </div>
+        </aside>
+        
+        <!-- 右侧档案内容 -->
+        <main class="profile-main" id="profileMain">
+          <!-- 未选择客户的初始状态 -->
+          <div class="profile-empty" id="profileEmpty">
+            <div class="empty-icon">👤</div>
+            <h3>请选择客户查看档案</h3>
+            <p>从左侧列表中选择一个客户</p>
+          </div>
+          
+          <!-- 客户档案内容 -->
+          <div class="profile-content" id="profileContent" style="display: none;">
+            <!-- 用户基本信息卡片 -->
+            <div class="profile-header">
+              <div class="user-info-section">
+                <div class="user-avatar-section">
+                  <img src="" alt="用户头像" class="user-avatar-large" id="userAvatar">
+                </div>
+                <div class="user-details-section">
+                  <h2 class="user-name" id="userName">客户姓名</h2>
+                  <p class="user-phone" id="userPhone">手机号码</p>
+                </div>
+              </div>
+              
+              <!-- 下次咨询提醒卡片 -->
+              <div class="next-consultation-card" id="nextConsultationCard" style="display: none;">
+                <div class="consultation-info">
+                  <span class="countdown-text" id="countdownText">距离下次咨询还有 28 分钟</span>
+                  <span class="consultation-type" id="nextConsultationType">线上咨询</span>
+                </div>
+                <button class="btn btn-sm btn-primary consultation-btn" id="nextConsultationBtn">开始咨询</button>
+              </div>
+            </div>
+            
+            <!-- AI总结信息 -->
+            <div class="ai-summary">
+              <div class="ai-summary-header">
+                <h3 class="ai-summary-title">
+                  <span class="ai-summary-icon">🤖</span>
+                  AI总结
+                  <button class="ai-summary-toggle" id="aiSummaryToggle">
+                    <span class="toggle-icon">›</span>
+                  </button>
+                </h3>
+              </div>
+              
+              <div class="ai-summary-content" id="aiSummaryContent">
+                <div class="risk-assessment">
+                  <h4 class="summary-title">
+                    风险评估
+                    <button class="info-btn" id="riskInfoBtn" title="风险评估说明">?</button>
+                  </h4>
+                  <div class="risk-tags" id="riskTags">
+                    <!-- 风险标签将动态生成 -->
+                  </div>
+                </div>
+                
+                <div class="medical-history">
+                  <h4 class="summary-title">
+                    疾病史与用药史
+                    <button class="info-btn" id="historyInfoBtn" title="信息来源说明">?</button>
+                  </h4>
+                  <ul class="history-list" id="historyList">
+                    <!-- 病史信息将动态生成 -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Tab导航 -->
+            <div class="tab-navigation">
+              <button class="tab-btn active" data-tab="basic">基本资料</button>
+              <button class="tab-btn" data-tab="consultations">咨询记录</button>
+              <button class="tab-btn" data-tab="scales">量表记录</button>
+              <button class="tab-btn" data-tab="diagnosis">问诊记录</button>
+              <button class="tab-btn" data-tab="prescriptions">处方记录</button>
+              <button class="tab-btn" data-tab="orders">订单信息</button>
+              <button class="tab-btn" data-tab="appointments">预约咨询记录</button>
+            </div>
+            
+            <!-- Tab内容区域 -->
+            <div class="tab-content">
+              <!-- 基本资料表单 -->
+              <div class="tab-pane active" id="basicInfo">
+                <form class="profile-form" id="profileForm">
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label class="form-label">昵称</label>
+                      <input type="text" class="form-input" id="nickname" readonly>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">姓名 *</label>
+                      <input type="text" class="form-input" id="realName" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">性别</label>
+                      <select class="form-select" id="gender">
+                        <option value="">请选择</option>
+                        <option value="male">男</option>
+                        <option value="female">女</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">出生日期</label>
+                      <input type="date" class="form-input" id="birthDate">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">年龄</label>
+                      <input type="text" class="form-input" id="age" readonly>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">手机号 *</label>
+                      <input type="tel" class="form-input" id="phoneNumber" required>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">身高(cm)</label>
+                      <input type="number" class="form-input" id="height" min="0" max="300">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">体重(kg)</label>
+                      <input type="number" class="form-input" id="weight" min="0" max="300" step="0.1">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">BMI</label>
+                      <input type="text" class="form-input" id="bmi" readonly placeholder="请填写身高和体重">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">婚姻状况</label>
+                      <select class="form-select" id="maritalStatus">
+                        <option value="">未知</option>
+                        <option value="single">未婚</option>
+                        <option value="married">已婚</option>
+                        <option value="divorced">离婚</option>
+                        <option value="widowed">丧偶</option>
+                      </select>
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">职业</label>
+                      <input type="text" class="form-input" id="occupation">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">学历</label>
+                      <select class="form-select" id="education">
+                        <option value="">未知</option>
+                        <option value="primary">小学</option>
+                        <option value="middle">初中</option>
+                        <option value="high">高中</option>
+                        <option value="college">大专</option>
+                        <option value="bachelor">本科</option>
+                        <option value="master">硕士</option>
+                        <option value="doctor">博士</option>
+                      </select>
+                    </div>
+                    <div class="form-group full-width">
+                      <label class="form-label">家庭住址</label>
+                      <input type="text" class="form-input" id="address">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">紧急联系人姓名</label>
+                      <input type="text" class="form-input" id="emergencyContactName">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">紧急联系人手机号</label>
+                      <input type="tel" class="form-input" id="emergencyContactPhone">
+                    </div>
+                  </div>
+                  
+                  <!-- 客户标签 -->
+                  <div class="customer-tags">
+                    <h4 class="tags-title">客户标签</h4>
+                    <div class="tags-group">
+                      <div class="tag-category">
+                        <span class="tag-label">销售标记</span>
+                        <div class="tag-content" id="salesTags">
+                          <span class="tag">测试标签</span>
+                        </div>
+                      </div>
+                      <div class="tag-category">
+                        <span class="tag-label">医生标记</span>
+                        <div class="tag-content" id="doctorTags">
+                          <span class="tag">测试标签</span>
+                        </div>
+                      </div>
+                      <div class="tag-category">
+                        <span class="tag-label">咨询师标记</span>
+                        <div class="tag-content" id="counselorTags">
+                          <button class="btn btn-sm btn-secondary add-tag-btn">+ 添加标签</button>
+                        </div>
+                      </div>
+                      <div class="tag-category">
+                        <span class="tag-label">班主任标记</span>
+                        <div class="tag-content" id="teacherTags">
+                          <button class="btn btn-sm btn-secondary add-tag-btn">+ 添加标签</button>
+                        </div>
+                      </div>
+                      <div class="tag-category">
+                        <span class="tag-label">AI生成标记</span>
+                        <div class="tag-content" id="aiTags">
+                          <span class="ai-note">该内容均由AI生成</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- 病历资料上传 -->
+                  <div class="medical-upload">
+                    <h4 class="upload-title">上传病历资料</h4>
+                    <div class="upload-area" id="uploadArea">
+                      <div class="upload-placeholder" id="uploadPlaceholder">
+                        <div class="upload-icon">📷</div>
+                        <p class="upload-text">上传图片（最多9张）</p>
+                        <button type="button" class="btn btn-secondary" id="uploadBtn">选择图片</button>
+                      </div>
+                      <div class="uploaded-images" id="uploadedImages"></div>
+                    </div>
+                    <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+                  </div>
+                  
+                  <!-- 症状描述 -->
+                  <div class="form-group full-width">
+                    <label class="form-label">症状描述</label>
+                    <textarea 
+                      class="form-textarea" 
+                      id="symptoms" 
+                      rows="4"
+                      placeholder="请详细描述客户的症状情况..."
+                    ></textarea>
+                  </div>
+                  
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">保存资料</button>
+                    <button type="button" class="btn btn-secondary" id="resetBtn">重置</button>
+                  </div>
+                </form>
+              </div>
+              
+              <!-- 其他Tab内容 -->
+              <div class="tab-pane" id="consultationsTab">
+                <div class="consultation-history">
+                  <div class="history-header">
+                    <h3>咨询记录</h3>
+                    <div class="history-stats">
+                      <span class="stat-item">总咨询次数: <strong>12</strong></span>
+                      <span class="stat-item">视频咨询: <strong>8</strong></span>
+                      <span class="stat-item">到店咨询: <strong>4</strong></span>
+                    </div>
+                  </div>
+                  <div class="consultation-items">
+                    <div class="consultation-record-item">
+                      <div class="record-date">2024-01-15</div>
+                      <div class="record-type video">视频咨询</div>
+                      <div class="record-duration">50分钟</div>
+                      <div class="record-summary">情绪管理技巧训练，症状有所缓解</div>
+                      <button class="btn btn-sm btn-secondary">查看详情</button>
+                    </div>
+                    <div class="consultation-record-item">
+                      <div class="record-date">2024-01-08</div>
+                      <div class="record-type offline">到店咨询</div>
+                      <div class="record-duration">60分钟</div>
+                      <div class="record-summary">认知行为疗法，建立应对策略</div>
+                      <button class="btn btn-sm btn-secondary">查看详情</button>
+                    </div>
+                    <div class="consultation-record-item">
+                      <div class="record-date">2024-01-01</div>
+                      <div class="record-type video">视频咨询</div>
+                      <div class="record-duration">45分钟</div>
+                      <div class="record-summary">初诊评估，确认治疗方案</div>
+                      <button class="btn btn-sm btn-secondary">查看详情</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tab-pane" id="scalesTab">
+                <div class="scales-history">
+                  <div class="history-header">
+                    <h3>量表记录</h3>
+                    <button class="btn btn-primary">新增量表</button>
+                  </div>
+                  <div class="scales-items">
+                    <div class="scale-item">
+                      <div class="scale-info">
+                        <h4>PHQ-9 抑郁症筛查量表</h4>
+                        <p class="scale-date">完成时间: 2024-01-15</p>
+                        <p class="scale-score">得分: <span class="score-high">15分</span> (中度抑郁)</p>
+                      </div>
+                      <div class="scale-actions">
+                        <button class="btn btn-sm btn-secondary">查看详情</button>
+                        <button class="btn btn-sm btn-outline">对比历史</button>
+                      </div>
+                    </div>
+                    <div class="scale-item">
+                      <div class="scale-info">
+                        <h4>GAD-7 焦虑症筛查量表</h4>
+                        <p class="scale-date">完成时间: 2024-01-15</p>
+                        <p class="scale-score">得分: <span class="score-medium">8分</span> (轻度焦虑)</p>
+                      </div>
+                      <div class="scale-actions">
+                        <button class="btn btn-sm btn-secondary">查看详情</button>
+                        <button class="btn btn-sm btn-outline">对比历史</button>
+                      </div>
+                    </div>
+                    <div class="scale-item">
+                      <div class="scale-info">
+                        <h4>生活质量评估量表</h4>
+                        <p class="scale-date">完成时间: 2024-01-08</p>
+                        <p class="scale-score">得分: <span class="score-low">65分</span> (生活质量一般)</p>
+                      </div>
+                      <div class="scale-actions">
+                        <button class="btn btn-sm btn-secondary">查看详情</button>
+                        <button class="btn btn-sm btn-outline">对比历史</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tab-pane" id="diagnosisTab">
+                <div class="diagnosis-history">
+                  <div class="history-header">
+                    <h3>问诊记录</h3>
+                    <button class="btn btn-primary">新增问诊</button>
+                  </div>
+                  <div class="diagnosis-items">
+                    <div class="diagnosis-item">
+                      <div class="diagnosis-header">
+                        <h4>2024-01-15 问诊记录</h4>
+                        <span class="diagnosis-status completed">已完成</span>
+                      </div>
+                      <div class="diagnosis-content">
+                        <div class="diagnosis-section">
+                          <h5>主要症状</h5>
+                          <p>情绪低落、兴趣减退、睡眠质量差、食欲下降</p>
+                        </div>
+                        <div class="diagnosis-section">
+                          <h5>病史询问</h5>
+                          <p>症状持续3个月，无明显诱因，家族史阴性</p>
+                        </div>
+                        <div class="diagnosis-section">
+                          <h5>初步诊断</h5>
+                          <p>中度抑郁症，建议进一步评估</p>
+                        </div>
+                      </div>
+                      <div class="diagnosis-actions">
+                        <button class="btn btn-sm btn-secondary">查看完整记录</button>
+                        <button class="btn btn-sm btn-outline">编辑</button>
+                      </div>
+                    </div>
+                    <div class="diagnosis-item">
+                      <div class="diagnosis-header">
+                        <h4>2024-01-08 问诊记录</h4>
+                        <span class="diagnosis-status completed">已完成</span>
+                      </div>
+                      <div class="diagnosis-content">
+                        <div class="diagnosis-section">
+                          <h5>主要症状</h5>
+                          <p>焦虑、紧张、心悸、出汗</p>
+                        </div>
+                        <div class="diagnosis-section">
+                          <h5>病史询问</h5>
+                          <p>工作压力大，症状在特定场合加重</p>
+                        </div>
+                        <div class="diagnosis-section">
+                          <h5>初步诊断</h5>
+                          <p>广泛性焦虑症，需要心理干预</p>
+                        </div>
+                      </div>
+                      <div class="diagnosis-actions">
+                        <button class="btn btn-sm btn-secondary">查看完整记录</button>
+                        <button class="btn btn-sm btn-outline">编辑</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tab-pane" id="prescriptionsTab">
+                <div class="prescriptions-history">
+                  <div class="history-header">
+                    <h3>处方记录</h3>
+                    <button class="btn btn-primary">新增处方</button>
+                  </div>
+                  <div class="prescription-items">
+                    <div class="prescription-item">
+                      <div class="prescription-header">
+                        <h4>2024-01-15 处方</h4>
+                        <span class="prescription-status active">正在使用</span>
+                      </div>
+                      <div class="prescription-content">
+                        <div class="medication-list">
+                          <div class="medication-item">
+                            <h5>度洛西汀肠溶胶囊</h5>
+                            <p class="medication-dose">规格: 30mg × 14粒</p>
+                            <p class="medication-usage">用法: 口服，每日1次，每次30mg</p>
+                            <p class="medication-duration">疗程: 4周</p>
+                          </div>
+                          <div class="medication-item">
+                            <h5>米氮平片</h5>
+                            <p class="medication-dose">规格: 15mg × 14片</p>
+                            <p class="medication-usage">用法: 睡前口服，每次15mg</p>
+                            <p class="medication-duration">疗程: 2周</p>
+                          </div>
+                        </div>
+                        <div class="prescription-notes">
+                          <h5>用药指导</h5>
+                          <p>按时服药，观察副作用，如有不适及时联系医生</p>
+                        </div>
+                      </div>
+                      <div class="prescription-actions">
+                        <button class="btn btn-sm btn-secondary">查看详情</button>
+                        <button class="btn btn-sm btn-outline">打印处方</button>
+                        <button class="btn btn-sm btn-warning">停用</button>
+                      </div>
+                    </div>
+                    <div class="prescription-item">
+                      <div class="prescription-header">
+                        <h4>2024-01-01 处方</h4>
+                        <span class="prescription-status completed">已完成</span>
+                      </div>
+                      <div class="prescription-content">
+                        <div class="medication-list">
+                          <div class="medication-item">
+                            <h5>草酸艾司西酞普兰片</h5>
+                            <p class="medication-dose">规格: 10mg × 28片</p>
+                            <p class="medication-usage">用法: 口服，每日1次，每次10mg</p>
+                            <p class="medication-duration">疗程: 4周</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="prescription-actions">
+                        <button class="btn btn-sm btn-secondary">查看详情</button>
+                        <button class="btn btn-sm btn-outline">复制处方</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tab-pane" id="ordersTab">
+                <div class="orders-history">
+                  <div class="history-header">
+                    <h3>订单信息</h3>
+                    <div class="order-stats">
+                      <span class="stat-item">总订单: <strong>5</strong></span>
+                      <span class="stat-item">已支付: <strong>3</strong></span>
+                      <span class="stat-item">总金额: <strong>¥2,580</strong></span>
+                    </div>
+                  </div>
+                  <div class="order-items">
+                    <div class="order-item">
+                      <div class="order-header">
+                        <h4>心理咨询套餐</h4>
+                        <span class="order-status paid">已支付</span>
+                      </div>
+                      <div class="order-details">
+                        <p class="order-date">订单日期: 2024-01-10</p>
+                        <p class="order-amount">金额: ¥980</p>
+                        <p class="order-content">包含: 4次视频咨询 + 心理测评</p>
+                      </div>
+                      <div class="order-progress">
+                        <p>使用进度: 2/4次咨询已完成</p>
+                        <div class="progress-bar">
+                          <div class="progress-fill" style="width: 50%"></div>
+                        </div>
+                      </div>
+                      <div class="order-actions">
+                        <button class="btn btn-sm btn-secondary">查看详情</button>
+                        <button class="btn btn-sm btn-outline">使用记录</button>
+                      </div>
+                    </div>
+                    <div class="order-item">
+                      <div class="order-header">
+                        <h4>专业心理评估</h4>
+                        <span class="order-status paid">已支付</span>
+                      </div>
+                      <div class="order-details">
+                        <p class="order-date">订单日期: 2024-01-05</p>
+                        <p class="order-amount">金额: ¥300</p>
+                        <p class="order-content">包含: 综合心理评估报告</p>
+                      </div>
+                      <div class="order-progress">
+                        <p>状态: 已完成</p>
+                      </div>
+                      <div class="order-actions">
+                        <button class="btn btn-sm btn-secondary">查看报告</button>
+                        <button class="btn btn-sm btn-outline">下载</button>
+                      </div>
+                    </div>
+                    <div class="order-item">
+                      <div class="order-header">
+                        <h4>心理健康指导</h4>
+                        <span class="order-status pending">待支付</span>
+                      </div>
+                      <div class="order-details">
+                        <p class="order-date">订单日期: 2024-01-16</p>
+                        <p class="order-amount">金额: ¥1,200</p>
+                        <p class="order-content">包含: 6次到店咨询 + 家庭治疗</p>
+                      </div>
+                      <div class="order-actions">
+                        <button class="btn btn-sm btn-primary">立即支付</button>
+                        <button class="btn btn-sm btn-outline">修改订单</button>
+                        <button class="btn btn-sm btn-danger">取消订单</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="tab-pane" id="appointmentsTab">
+                <div class="appointments-history">
+                  <div class="history-header">
+                    <h3>预约咨询记录</h3>
+                    <button class="btn btn-primary">新增预约</button>
+                  </div>
+                  <div class="appointment-calendar">
+                    <div class="calendar-header">
+                      <button class="btn btn-sm btn-outline" id="prevMonth">‹</button>
+                      <h4 id="currentMonth">2024年1月</h4>
+                      <button class="btn btn-sm btn-outline" id="nextMonth">›</button>
+                    </div>
+                    <div class="calendar-grid">
+                      <div class="calendar-weekdays">
+                        <div class="weekday">日</div>
+                        <div class="weekday">一</div>
+                        <div class="weekday">二</div>
+                        <div class="weekday">三</div>
+                        <div class="weekday">四</div>
+                        <div class="weekday">五</div>
+                        <div class="weekday">六</div>
+                      </div>
+                      <div class="calendar-days" id="calendarDays">
+                        <!-- 日历天数将通过JavaScript生成 -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="appointment-list">
+                    <div class="appointment-item upcoming">
+                      <div class="appointment-time">
+                        <div class="time-date">1月18日</div>
+                        <div class="time-slot">14:00-15:00</div>
+                      </div>
+                      <div class="appointment-info">
+                        <h5>视频咨询</h5>
+                        <p>认知行为疗法后续治疗</p>
+                      </div>
+                      <div class="appointment-status">
+                        <span class="status-badge confirmed">已确认</span>
+                      </div>
+                      <div class="appointment-actions">
+                        <button class="btn btn-sm btn-primary">进入咨询</button>
+                        <button class="btn btn-sm btn-outline">重新安排</button>
+                        <button class="btn btn-sm btn-danger">取消</button>
+                      </div>
+                    </div>
+                    <div class="appointment-item">
+                      <div class="appointment-time">
+                        <div class="time-date">1月20日</div>
+                        <div class="time-slot">10:00-11:00</div>
+                      </div>
+                      <div class="appointment-info">
+                        <h5>到店咨询</h5>
+                        <p>深度心理评估</p>
+                      </div>
+                      <div class="appointment-status">
+                        <span class="status-badge pending">待确认</span>
+                      </div>
+                      <div class="appointment-actions">
+                        <button class="btn btn-sm btn-secondary">确认预约</button>
+                        <button class="btn btn-sm btn-outline">修改</button>
+                        <button class="btn btn-sm btn-danger">取消</button>
+                      </div>
+                    </div>
+                    <div class="appointment-item completed">
+                      <div class="appointment-time">
+                        <div class="time-date">1月15日</div>
+                        <div class="time-slot">14:00-15:00</div>
+                      </div>
+                      <div class="appointment-info">
+                        <h5>视频咨询</h5>
+                        <p>情绪管理技巧训练</p>
+                      </div>
+                      <div class="appointment-status">
+                        <span class="status-badge completed">已完成</span>
+                      </div>
+                      <div class="appointment-actions">
+                        <button class="btn btn-sm btn-secondary">查看记录</button>
+                        <button class="btn btn-sm btn-outline">重新预约</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </main>
+  </div>
+  
+  <!-- 风险评估说明弹窗 -->
+  <div class="modal" id="riskInfoModal">
+    <div class="modal-content">
+      <h3 class="modal-title">风险评估说明</h3>
+      <div class="modal-message">
+        <p>风险评估基于AI分析客户的咨询记录、量表结果等数据生成：</p>
+        <ul>
+          <li><strong>高风险</strong>：需要立即关注和干预</li>
+          <li><strong>中风险</strong>：需要密切观察和适当干预</li>
+          <li><strong>低风险</strong>：需要常规关注和支持</li>
+        </ul>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="riskInfoClose">知道了</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 疾病史信息说明弹窗 -->
+  <div class="modal" id="historyInfoModal">
+    <div class="modal-content">
+      <h3 class="modal-title">疾病史与用药史说明</h3>
+      <div class="modal-message">
+        <p>该信息由AI根据以下数据源自动提炼：</p>
+        <ul>
+          <li>历史咨询记录</li>
+          <li>问诊记录</li>
+          <li>客户自述信息</li>
+          <li>上传的病历资料</li>
+        </ul>
+        <p class="note">注：请核实信息准确性，如有需要可手动编辑。</p>
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-primary" id="historyInfoClose">知道了</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/profile.js"></script>
+</body>
+</html> 

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>咨询笔记 - AI咨询师驾驶舱</title>
+  <link rel="stylesheet" href="assets/css/common.css">
+  <link rel="stylesheet" href="assets/css/consultation-notes-new.css">
+</head>
+<body>
+  <div class="consultation-container">
+    <!-- 页面标题头部 -->
+    <header class="page-header">
+      <h1 class="page-title">咨询笔记</h1>
+      <div class="header-actions">
+        <button class="btn btn-outline" onclick="history.back()">返回</button>
+        <button class="btn btn-danger" id="endConsultationBtn">结束咨询</button>
+      </div>
+    </header>
+
+    <!-- AI实时助手弹窗 -->
+    <div class="ai-assistant-popup" id="aiAssistantPopup">
+      <div class="popup-header" id="popupHeader">
+        <div class="popup-title">
+          <span class="assistant-icon">🤖</span>
+          <span>AI实时助手</span>
+        </div>
+        <div class="popup-controls">
+          <button class="popup-toggle" id="assistantToggle">−</button>
+          <button class="popup-close" id="assistantClose">×</button>
+        </div>
+      </div>
+      <div class="popup-content" id="assistantContent">
+        <div class="section-header">
+          <div class="header-left">
+            <h4 id="observationTitle">情感观察</h4>
+            <span class="status-tag attention" id="statusTag">关注</span>
+          </div>
+          <button class="expand-btn" id="expandBtn" style="display: none;">+</button>
+        </div>
+        <div class="observation-item always-visible">
+          <div class="observation-label">注意到来访者在谈到家庭关系时语速变慢，可能触及敏感话题。</div>
+        </div>
+        <div class="collapsible-content">
+          <div class="suggestion-item">
+            <div class="suggestion-label">建议使用反映技术：</div>
+            <div class="suggestion-text">"我感觉到你在说这个话题时有些不太一样的感受？"</div>
+            <button class="btn-suggestion">收起</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+      <!-- 笔记本区域 -->
+      <div class="notebook-section">
+        <!-- 咨询信息条 -->
+        <div class="consultation-info-bar">
+          <div class="info-item">
+            <span class="info-label">咨询时间</span>
+            <span class="info-value" id="consultationTime">2024年1月18日 14:00-15:00</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">来访者</span>
+            <span class="info-value" id="clientName">李小雅</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">咨询次数</span>
+            <span class="info-value" id="sessionCount">第 3 次咨询</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">咨询时长</span>
+            <span class="info-value timer" id="sessionTimer">00:00:00</span>
+          </div>
+        </div>
+
+        <!-- 编辑工具栏 -->
+        <div class="edit-toolbar">
+          <!-- 绘图工具 -->
+          <div class="tool-section">
+            <h4>绘图工具</h4>
+            <div class="drawing-tools">
+              <button class="tool-btn active" data-tool="pen" title="画笔">
+                <span class="tool-icon">✏️</span>
+                <span class="tool-name">画笔</span>
+              </button>
+              <button class="tool-btn" data-tool="eraser" title="橡皮擦">
+                <span class="tool-icon">🧹</span>
+                <span class="tool-name">橡皮</span>
+              </button>
+              <button class="tool-btn" data-tool="highlighter" title="荧光笔">
+                <span class="tool-icon">🖍️</span>
+                <span class="tool-name">荧光笔</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- 颜色/粗细 -->
+          <div class="tool-section">
+            <h4>颜色/粗细</h4>
+            <div class="tool-options">
+              <div class="color-palette">
+                <button class="color-btn active" data-color="#000000" style="background: #000000"></button>
+                <button class="color-btn" data-color="#2563eb" style="background: #2563eb"></button>
+                <button class="color-btn" data-color="#dc2626" style="background: #dc2626"></button>
+                <button class="color-btn" data-color="#16a34a" style="background: #16a34a"></button>
+                <button class="color-btn" data-color="#ca8a04" style="background: #ca8a04"></button>
+                <button class="color-btn" data-color="#9333ea" style="background: #9333ea"></button>
+              </div>
+              <div class="size-control">
+                <input type="range" id="brushSize" min="1" max="20" value="3">
+              </div>
+            </div>
+          </div>
+
+          <!-- 操作 -->
+          <div class="tool-section">
+            <h4>操作</h4>
+            <div class="action-tools">
+              <button class="tool-btn" id="undoBtn" title="撤销">
+                <span class="tool-icon">↶</span>
+                <span class="tool-name">撤销</span>
+              </button>
+              <button class="tool-btn" id="redoBtn" title="重做">
+                <span class="tool-icon">↷</span>
+                <span class="tool-name">重做</span>
+              </button>
+              <button class="tool-btn" id="clearBtn" title="清空">
+                <span class="tool-icon">🗑️</span>
+                <span class="tool-name">清空</span>
+              </button>
+              <button class="tool-btn" id="saveBtn" title="保存">
+                <span class="tool-icon">💾</span>
+                <span class="tool-name">保存</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 笔记本纸张 -->
+        <div class="notebook-paper">
+          <canvas class="notebook-canvas" id="notebookCanvas"></canvas>
+          <!-- 纸张线条背景 -->
+          <div class="paper-lines"></div>
+        </div>
+
+        <!-- 右侧控制按钮 -->
+        <div class="side-controls">
+          <button class="control-btn" id="aiAssistantBtn" title="AI实时助手">
+            <span class="btn-icon">🤖</span>
+            <span class="btn-label">AI助手</span>
+          </button>
+          <button class="control-btn" id="transcriptBtn" title="逐字稿标记">
+            <span class="btn-icon">📝</span>
+            <span class="btn-label">逐字稿</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 逐字稿区域 -->
+      <div class="transcript-panel" id="transcriptPanel">
+        <div class="transcript-header">
+          <h3>逐字稿标记</h3>
+          <div class="transcript-controls">
+            <button class="btn btn-sm" id="quickMarkBtn">快速标记</button>
+            <button class="btn btn-sm btn-secondary" id="endMarkBtn" style="display: none;">结束标记</button>
+            <button class="btn btn-sm btn-success" id="addToNotesBtn" style="display: none;">添加标记至笔记</button>
+          </div>
+        </div>
+        <div class="transcript-content" id="transcriptContent">
+          <div class="scroll-indicator" id="scrollIndicator">自动跟随</div>
+          <div class="transcript-stream" id="transcriptStream">
+            <!-- 逐字稿内容将在这里动态生成 -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 底部咨询工具栏 -->
+    <div class="bottom-toolbar" id="bottomToolbar">
+      <div class="consultation-tools">
+        <button class="tool-btn" id="pureCanvasBtn" title="画板">
+          <span class="tool-icon">🎨</span>
+          <span class="tool-name">画板</span>
+        </button>
+        <button class="tool-btn" id="meditationBtn" title="正念冥想">
+          <span class="tool-icon">🧘‍♀️</span>
+          <span class="tool-name">正念冥想</span>
+        </button>
+        <button class="tool-btn" id="emotionWheelBtn" title="情绪轮盘">
+          <span class="tool-icon">🎯</span>
+          <span class="tool-name">情绪轮盘</span>
+        </button>
+        <button class="tool-btn" id="relaxationBtn" title="放松练习">
+          <span class="tool-icon">🌸</span>
+          <span class="tool-name">放松练习</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 画板模态窗口 -->
+    <div class="modal-overlay" id="pureCanvasModal">
+      <div class="fullscreen-canvas-container">
+        <div class="canvas-header">
+          <h3>画板</h3>
+          <div class="canvas-header-actions">
+            <button class="btn btn-primary" id="saveCanvasBtn">保存</button>
+            <button class="btn btn-outline" id="closePureCanvas">关闭</button>
+          </div>
+        </div>
+        <canvas class="pure-canvas" id="pureCanvas"></canvas>
+        <div class="canvas-toolbar">
+          <div class="canvas-tools">
+            <button class="canvas-tool active" data-tool="pen">画笔</button>
+            <button class="canvas-tool" data-tool="eraser">橡皮</button>
+            <button class="canvas-tool" data-tool="clear">清空</button>
+          </div>
+          <div class="canvas-colors">
+            <button class="canvas-color active" data-color="#000000" style="background: #000000"></button>
+            <button class="canvas-color" data-color="#2563eb" style="background: #2563eb"></button>
+            <button class="canvas-color" data-color="#dc2626" style="background: #dc2626"></button>
+            <button class="canvas-color" data-color="#16a34a" style="background: #16a34a"></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 正念冥想模态窗口 -->
+    <div class="modal-overlay" id="meditationModal">
+      <div class="meditation-container">
+        <div class="meditation-header">
+          <h3>正念冥想引导</h3>
+          <button class="btn btn-outline" id="closeMeditation">关闭</button>
+        </div>
+        <div class="meditation-content">
+          <div class="meditation-options">
+            <button class="meditation-btn" data-type="breathing">呼吸冥想 (5分钟)</button>
+            <button class="meditation-btn" data-type="body-scan">身体扫描 (10分钟)</button>
+            <button class="meditation-btn" data-type="mindfulness">正念观察 (3分钟)</button>
+            <button class="meditation-btn" data-type="relaxation">渐进放松 (8分钟)</button>
+          </div>
+          <div class="meditation-player" id="meditationPlayer" style="display: none;">
+            <div class="player-info">
+              <h4 id="currentMeditationType">呼吸冥想</h4>
+              <div class="progress-ring">
+                <svg class="progress-ring-svg" width="120" height="120">
+                  <circle class="progress-ring-circle-bg" cx="60" cy="60" r="54"></circle>
+                  <circle class="progress-ring-circle" cx="60" cy="60" r="54"></circle>
+                </svg>
+                <div class="progress-text">
+                  <span id="currentTime">00:00</span>
+                  <span id="totalTime">05:00</span>
+                </div>
+              </div>
+            </div>
+            <div class="player-controls">
+              <button class="control-btn" id="playPauseBtn">▶️</button>
+              <button class="control-btn" id="resetBtn">⏹️</button>
+            </div>
+            <div class="meditation-guide" id="meditationGuide">
+              <p>请舒适地坐好，轻轻闭上眼睛...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 核销弹窗 -->
+    <div class="modal-overlay" id="checkoutModal">
+      <div class="checkout-container">
+        <div class="checkout-header">
+          <h3>咨询核销</h3>
+          <button class="btn btn-outline" id="cancelCheckout">取消</button>
+        </div>
+        <div class="checkout-content">
+          <div class="checkout-summary">
+            <div class="summary-item">
+              <label>来访者：</label>
+              <span id="checkoutClientName">李小雅</span>
+            </div>
+            <div class="summary-item">
+              <label>开始时间：</label>
+              <span id="checkoutStartTime">2024年1月18日 14:00</span>
+            </div>
+            <div class="summary-item">
+              <label>实际时长：</label>
+              <span id="checkoutDuration">00:45:30</span>
+            </div>
+          </div>
+          <div class="checkout-options">
+            <label>核销时长：</label>
+            <div class="duration-buttons">
+              <button class="duration-btn" data-minutes="30">30分钟</button>
+              <button class="duration-btn" data-minutes="45">45分钟</button>
+              <button class="duration-btn active" data-minutes="60">60分钟</button>
+              <button class="duration-btn" data-minutes="90">90分钟</button>
+            </div>
+          </div>
+          <div class="checkout-notes">
+            <label for="checkoutRemark">备注：</label>
+            <textarea id="checkoutRemark" placeholder="请输入核销备注（可选）"></textarea>
+          </div>
+        </div>
+        <div class="checkout-footer">
+          <button class="btn btn-primary" id="confirmCheckout">确认核销</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="assets/js/common.js"></script>
+  <script src="assets/js/consultation-notes-new.js"></script>
+</body>
+</html> 

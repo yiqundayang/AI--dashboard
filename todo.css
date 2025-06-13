@@ -1,0 +1,552 @@
+/* 待办中心页面样式 */
+
+/* 日期选择器 */
+.date-selector {
+  display: flex;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+  overflow-x: auto;
+  padding: var(--space-2) 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.date-tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-5);
+  border-radius: 25px;
+  border: 1px solid var(--gray-300);
+  background: var(--bg-primary);
+  color: var(--gray-700);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-height: 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.date-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.04);
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.date-tab:hover {
+  background: var(--gray-100);
+}
+
+.date-tab:hover::before {
+  opacity: 1;
+}
+
+.date-tab.active {
+  background: var(--primary-blue);
+  color: white;
+  border-color: var(--primary-blue);
+}
+
+.date-tab.active::before {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 添加日期按钮的active状态样式 */
+.date-tab:active {
+  background: var(--gray-200);
+  transform: scale(0.98);
+}
+
+.date-tab:active::before {
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.date-tab.active:active {
+  background: var(--blue-600);
+  transform: scale(0.98);
+}
+
+.date-tab.active:active::before {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* 区域标题 */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-5);
+}
+
+.section-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  color: var(--gray-900);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.count-badge {
+  background: var(--gray-200);
+  color: var(--gray-700);
+  padding: var(--space-1) var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  min-width: 20px;
+  text-align: center;
+}
+
+/* 咨询项目样式 */
+.consultation-item, .record-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: "avatar info actions";
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-4) var(--space-4) var(--space-4);
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-3);
+  border: 1px solid var(--gray-200);
+  transition: all 0.2s ease;
+  min-height: 80px;
+  overflow: hidden;
+}
+
+.consultation-item:hover, .record-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* 咨询类型标签 - 完全贴边角标效果 */
+.consultation-type {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+}
+
+.type-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 0 0 var(--radius-lg) 0;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  min-height: 32px;
+  border: none;
+  position: relative;
+}
+
+.type-tag.offline {
+  background: var(--warning-orange);
+  color: white;
+}
+
+.type-tag.video {
+  background: var(--success-green);
+  color: white;
+}
+
+/* 用户头像区域 */
+.user-avatar-section {
+  grid-area: avatar;
+  margin-left: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.user-avatar-section .avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--gray-200);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 用户信息区域 - 调整布局适应新结构 */
+.user-info {
+  grid-area: info;
+  margin-left: var(--space-3);
+  padding-top: var(--space-3);
+}
+
+.user-details {
+  width: 100%;
+}
+
+.user-name {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.user-name .name {
+  font-weight: var(--font-weight-semibold);
+  color: var(--gray-900);
+  font-size: var(--font-size-base);
+}
+
+.consultation-time {
+  font-size: var(--font-size-sm);
+  color: var(--gray-600);
+  margin-bottom: var(--space-1);
+}
+
+.profile-link {
+  font-size: var(--font-size-xs);
+  color: var(--primary-blue);
+  text-decoration: none;
+}
+
+.profile-link:hover {
+  text-decoration: underline;
+}
+
+/* 操作按钮区域 */
+.consultation-actions, .record-status {
+  grid-area: actions;
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+  justify-self: end;
+}
+
+.consultation-actions .btn {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-sm);
+  min-height: 36px;
+}
+
+/* 记录状态按钮样式 */
+.record-generating, .record-pending {
+  padding: var(--space-2) var(--space-3);
+  font-size: var(--font-size-xs);
+  border-radius: var(--radius-md);
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.record-generating {
+  background: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.record-generating:hover {
+  background: var(--gray-300);
+}
+
+.record-pending {
+  background: rgba(255, 149, 0, 0.1);
+  color: var(--warning-orange);
+  border: 1px solid rgba(255, 149, 0, 0.3);
+}
+
+.record-pending:hover {
+  background: rgba(255, 149, 0, 0.2);
+}
+
+/* 咨询记录区域 */
+.records-section {
+  margin-top: var(--space-8);
+}
+
+.status-icon {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+}
+
+.status-icon.generating {
+  background: var(--gray-400);
+}
+
+.status-icon.pending {
+  background: var(--warning-orange);
+}
+
+.status-icon.completed {
+  background: var(--success-green);
+}
+
+/* 确认弹窗样式 */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.modal.show {
+  opacity: 1;
+}
+
+.modal-content {
+  background: var(--bg-primary);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  transform: scale(0.9);
+  transition: transform 0.2s ease;
+}
+
+.modal.show .modal-content {
+  transform: scale(1);
+}
+
+.modal-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--space-3);
+  color: var(--gray-900);
+}
+
+.modal-message {
+  color: var(--gray-700);
+  margin-bottom: var(--space-6);
+  line-height: 1.5;
+}
+
+.modal-actions {
+  display: flex;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+.modal-actions .btn {
+  flex: 1;
+  max-width: 120px;
+}
+
+/* 空状态样式 */
+.empty-consultation, .empty-records {
+  text-align: center;
+  padding: var(--space-10) var(--space-6);
+  color: var(--gray-500);
+  background: var(--bg-primary);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--gray-200);
+}
+
+.empty-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-4);
+  background: var(--gray-100);
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-2xl);
+  color: var(--gray-400);
+}
+
+/* Toast样式增强 */
+.toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(10px);
+}
+
+.toast.success {
+  background: linear-gradient(135deg, var(--success-green), #2DB653);
+}
+
+.toast.error {
+  background: linear-gradient(135deg, var(--error-red), #E8302A);
+}
+
+.toast.warning {
+  background: linear-gradient(135deg, var(--warning-orange), #E8890B);
+}
+
+.toast.info {
+  background: linear-gradient(135deg, var(--primary-blue), #0056CC);
+}
+
+/* iPad横屏适配 */
+@media (min-width: 1024px) and (orientation: landscape) {
+  .consultation-item, .record-item {
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+  }
+  
+  .consultation-actions {
+    flex-direction: row;
+  }
+  
+  .date-selector {
+    justify-content: flex-start;
+  }
+  
+  .modal-content {
+    max-width: 500px;
+  }
+}
+
+/* iPad竖屏适配 */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .consultation-item, .record-item {
+    padding: var(--space-5) var(--space-4) var(--space-4) var(--space-4);
+    min-height: 85px;
+  }
+  
+  .consultation-actions .btn {
+    min-height: 40px;
+    padding: var(--space-2) var(--space-4);
+  }
+  
+  .toast {
+    top: 60px;
+  }
+}
+
+/* 小屏幕适配 */
+@media (max-width: 767px) {
+  .consultation-item, .record-item {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+      "type"
+      "avatar"
+      "info"
+      "actions";
+    justify-items: start;
+    gap: var(--space-3);
+    padding: var(--space-6) var(--space-4) var(--space-4) var(--space-4);
+    min-height: auto;
+  }
+  
+  .consultation-type {
+    top: 0;
+    left: 0;
+  }
+  
+  .user-avatar-section {
+    margin-left: 0;
+    margin-top: var(--space-4);
+    justify-self: center;
+  }
+  
+  .user-info {
+    margin-left: 0;
+    padding-top: 0;
+    text-align: center;
+    width: 100%;
+  }
+  
+  .consultation-actions, .record-status {
+    justify-self: stretch;
+    width: 100%;
+  }
+  
+  .consultation-actions .btn {
+    flex: 1;
+  }
+  
+  .date-selector {
+    justify-content: flex-start;
+  }
+  
+  .modal-content {
+    width: 95%;
+    padding: var(--space-5);
+  }
+}
+
+/* 触摸优化 */
+@media (hover: none) and (pointer: coarse) {
+  .consultation-item:hover, .record-item:hover {
+    transform: none;
+  }
+  
+  .consultation-item:active, .record-item:active {
+    transform: scale(0.98);
+  }
+  
+  .date-tab:hover {
+    background: var(--bg-primary);
+  }
+  
+  .date-tab:hover::before {
+    opacity: 0;
+  }
+  
+  .date-tab:active {
+    background: var(--gray-200);
+    transform: scale(0.96);
+  }
+  
+  .date-tab:active::before {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.08);
+  }
+  
+  .date-tab.active:hover {
+    background: var(--primary-blue);
+  }
+  
+  .date-tab.active:hover::before {
+    opacity: 0;
+  }
+  
+  .date-tab.active:active {
+    background: var(--blue-600);
+    transform: scale(0.96);
+  }
+  
+  .date-tab.active:active::before {
+    opacity: 1;
+    background: rgba(255, 255, 255, 0.2);
+  }
+} 
